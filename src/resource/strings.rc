@@ -1,0 +1,28 @@
+STRINGTABLE {
+
+
+    IDS_BASE_LANG_EN                                              "English"
+    IDS_BASE_LANG_EN + IDS_APPERR_INIT                            "ERROR: Failed during Application startup"
+    IDS_BASE_LANG_EN + IDS_PROGRAM_TITLE                          "Play Poker"
+    IDS_BASE_LANG_EN + IDS_EXIT                                   "Exit"
+    IDS_BASE_LANG_EN + IDS_ABOUT                                  "About"
+    IDS_BASE_LANG_EN + IDS_ERROR                                  "Error"
+
+
+    IDS_BASE_LANG_FR                                              "Français"
+    IDS_BASE_LANG_FR + IDS_APPERR_INIT                            "ERREUR: Erreur au démarrage"
+    IDS_BASE_LANG_FR + IDS_PROGRAM_TITLE                          "Jouer au poker"
+    IDS_BASE_LANG_FR + IDS_EXIT                                   "Quitter"
+    IDS_BASE_LANG_FR + IDS_ABOUT                                  "A propos de"
+    IDS_BASE_LANG_FR + IDS_ERROR                                  "Erreur"
+
+
+    IDS_BASE_LANG_ES                                              "Español"
+    IDS_BASE_LANG_ES + IDS_APPERR_INIT                            "ERROR: Error iniciando la aplicación"
+    IDS_BASE_LANG_ES + IDS_PROGRAM_TITLE                          "Poker"
+    IDS_BASE_LANG_ES + IDS_EXIT                                   "Salir"
+    IDS_BASE_LANG_ES + IDS_ABOUT                                  "Acerca de"
+    IDS_BASE_LANG_ES + IDS_ERROR                                  "Error"
+
+
+}

@@ -1,0 +1,53 @@
+
+
+
+#ifndef	_WIN32_WCE
+
+
+1					VERSIONINFO 
+FILEVERSION			1, 0, 0, 0
+PRODUCTVERSION		1, 0, 0, 0
+FILEFLAGSMASK		VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PRIVATEBUILD | VS_FF_INFOINFERRED | VS_FF_SPECIALBUILD
+FILEFLAGS			(VS_FF_DEBUG | VS_FF_PRERELEASE)
+#ifdef _WIN32
+FILEOS				VOS__WINDOWS32
+#else
+FILEOS				VOS__WINDOWS16
+#endif
+FILETYPE			VFT_APP
+FILESUBTYPE			VFT2_DRV_NETWORK
+BEGIN
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE	"Translation", 0x0409, 1252
+	END
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904E4"
+		BEGIN
+			VALUE "CompanyName", "Sprysoftware\0"
+			VALUE "FileDescription", "Poker playing app\0"
+
+			VALUE "FileVersion", "1.0\0"
+
+			VALUE "InternalName", "cards\0"
+
+			VALUE "LegalCopyright", "Copyright © 2023 Sprysoftware. All rights reserved.\0"
+
+#ifdef _WIN32
+			VALUE "OriginalFilename", "cards.exe\0"
+#else
+			VALUE "OriginalFilename", "cards.exe\0"
+#endif
+			VALUE "ProductName", "Cards\0"
+
+			VALUE "ProductVersion", "3\0"
+
+		END
+
+	END
+
+END
+
+
+#endif	/* ! _WIN32_WCE */

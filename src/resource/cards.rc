@@ -1,0 +1,71 @@
+
+// nameID         BITMAP imagepathname
+
+ID_SPADES_DEUCE   BITMAP faces/spades_deuce.bmp
+ID_SPADES_TREY    BITMAP faces/spades_trey.bmp
+ID_SPADES_4       BITMAP faces/spades_4.bmp
+ID_SPADES_5       BITMAP faces/spades_5.bmp
+ID_SPADES_6       BITMAP faces/spades_6.bmp
+ID_SPADES_7       BITMAP faces/spades_7.bmp
+ID_SPADES_8       BITMAP faces/spades_8.bmp
+ID_SPADES_9       BITMAP faces/spades_9.bmp
+ID_SPADES_10      BITMAP faces/spades_10.bmp
+ID_SPADES_KNAVE   BITMAP faces/spades_knave.bmp
+ID_SPADES_QUEEN   BITMAP faces/spades_queen.bmp
+ID_SPADES_KING    BITMAP faces/spades_king.bmp
+ID_SPADES_ACE     BITMAP faces/spades_ace.bmp
+
+ID_HEARTS_DEUCE   BITMAP faces/hearts_deuce.bmp
+ID_HEARTS_TREY    BITMAP faces/hearts_trey.bmp
+ID_HEARTS_4       BITMAP faces/hearts_4.bmp
+ID_HEARTS_5       BITMAP faces/hearts_5.bmp
+ID_HEARTS_6       BITMAP faces/hearts_6.bmp
+ID_HEARTS_7       BITMAP faces/hearts_7.bmp
+ID_HEARTS_8       BITMAP faces/hearts_8.bmp
+ID_HEARTS_9       BITMAP faces/hearts_9.bmp
+ID_HEARTS_10      BITMAP faces/hearts_10.bmp
+ID_HEARTS_KNAVE   BITMAP faces/hearts_knave.bmp
+ID_HEARTS_QUEEN   BITMAP faces/hearts_queen.bmp
+ID_HEARTS_KING    BITMAP faces/hearts_king.bmp
+ID_HEARTS_ACE     BITMAP faces/hearts_ace.bmp
+
+ID_DIAMONDS_DEUCE BITMAP faces/diamonds_deuce.bmp
+ID_DIAMONDS_TREY  BITMAP faces/diamonds_trey.bmp
+ID_DIAMONDS_4     BITMAP faces/diamonds_4.bmp
+ID_DIAMONDS_5     BITMAP faces/diamonds_5.bmp
+ID_DIAMONDS_6     BITMAP faces/diamonds_6.bmp
+ID_DIAMONDS_7     BITMAP faces/diamonds_7.bmp
+ID_DIAMONDS_8     BITMAP faces/diamonds_8.bmp
+ID_DIAMONDS_9     BITMAP faces/diamonds_9.bmp
+ID_DIAMONDS_10    BITMAP faces/diamonds_10.bmp
+ID_DIAMONDS_KNAVE BITMAP faces/diamonds_knave.bmp
+ID_DIAMONDS_QUEEN BITMAP faces/diamonds_queen.bmp
+ID_DIAMONDS_KING  BITMAP faces/diamonds_king.bmp
+ID_DIAMONDS_ACE   BITMAP faces/diamonds_ace.bmp
+
+ID_CLUBS_DEUCE    BITMAP faces/clubs_deuce.bmp
+ID_CLUBS_TREY     BITMAP faces/clubs_trey.bmp
+ID_CLUBS_4        BITMAP faces/clubs_4.bmp
+ID_CLUBS_5        BITMAP faces/clubs_5.bmp
+ID_CLUBS_6        BITMAP faces/clubs_6.bmp
+ID_CLUBS_7        BITMAP faces/clubs_7.bmp
+ID_CLUBS_8        BITMAP faces/clubs_8.bmp
+ID_CLUBS_9        BITMAP faces/clubs_9.bmp
+ID_CLUBS_10       BITMAP faces/clubs_10.bmp
+ID_CLUBS_KNAVE    BITMAP faces/clubs_knave.bmp
+ID_CLUBS_QUEEN    BITMAP faces/clubs_queen.bmp
+ID_CLUBS_KING     BITMAP faces/clubs_king.bmp
+ID_CLUBS_ACE      BITMAP faces/clubs_ace.bmp
+
+IDBMP_BACK_ABSTRACT        BITMAP  faces/abstract.bmp
+IDBMP_BACK_ABSTRACT_CLOUDS BITMAP  faces/abstract_clouds.bmp
+IDBMP_BACK_ABSTRACT_SCENE  BITMAP  faces/abstract_scene.bmp
+IDBMP_BACK_ASTRONAUT       BITMAP  faces/astronaut.bmp
+IDBMP_BACK_BLUE            BITMAP  faces/blue.bmp
+IDBMP_BACK_BLUE2           BITMAP  faces/blue2.bmp
+IDBMP_BACK_CARS            BITMAP  faces/cars.bmp
+IDBMP_BACK_CASTLE          BITMAP  faces/castle.bmp
+IDBMP_BACK_FISH            BITMAP  faces/fish.bmp
+IDBMP_BACK_FROG            BITMAP  faces/frog.bmp
+IDBMP_BACK_RED             BITMAP  faces/red.bmp
+IDBMP_BACK_RED2            BITMAP  faces/red2.bmp

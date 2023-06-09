@@ -1,0 +1,22 @@
+
+
+#include "../resource.h"
+
+
+#ifndef WORKSHOP_INVOKED
+#include <windows.h>
+#include <richedit.h>
+#include <commctrl.h>
+//#include <winver.h>
+#endif
+
+
+#include "dialogs.rc"
+#include "menus.rc"
+#include "strings.rc"
+#include "cards.rc"
+#include "version.rc"
+
+
+IDI_MAIN           ICON app.ico
+

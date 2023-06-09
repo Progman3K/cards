@@ -1,0 +1,96 @@
+.SUFFIXES: .rc
+
+
+.rc.o:
+	$(WRC) $(WRCFLAGS) $(DEFINES) -o $@ $<
+
+#ifndef MakeResources
+#define MakeResources(infile,target,segname)  $(WRC) $(WRCFLAGS) $(DEFINES) -i infile -o target
+#endif
+
+#if defined( BUILD_WIN32 )
+                   CC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-g++
+                  WRC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-windres
+#endif
+
+#if defined( BUILD_WIN64 )
+                   CC = /usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-g++
+                  WRC = /usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-windres
+#else
+
+#endif
+
+             APPNAME  = cards
+
+                SRCS  = src/cards.cpp src/deck.cpp src/hands.cpp
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+                SRCS  += src/about.cpp \
+                         src/mainwnd.cpp \
+                         src/mainwnd_cmd.cpp \
+                         src/displaychange.cpp \
+                         src/win32init.cpp \
+                         src/winmain.cpp
+#else
+                SRCS  += src/main.cpp
+#endif
+
+                OBJS  = $(subst .cpp,.o,$(SRCS))
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+                OBJS += src/resource/resource.o
+#else
+#endif
+
+                  CXX = $(CC)
+
+              INCROOT = .
+
+      LOCAL_LIBRARIES = -lstdc++
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+      LOCAL_LIBRARIES += -mwindows
+      LOCAL_LIBRARIES += -lgdi32 -lcomctl32
+#else
+#endif
+            USRLIBDIR = . /* -static */
+
+           CXXOPTIONS = -Wall -std=c++20
+
+#if defined( BUILD_RELEASE )
+        CXXDEBUGFLAGS = -Os
+#else
+        CXXDEBUGFLAGS = -O0 -g
+#endif
+
+              DEFINES = -D_DEFAULT_SOURCE -DUNICODE -D_UNICODE
+
+             INCLUDES =
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+              DEFINES += -D_WIN32_WINNT=0x0500 -D_WIN32
+#endif
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+src/resource/resource.rc: src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc
+
+src/resource/resource.res: src/resource/resource.rc src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc
+	$(WRC) $(WRCFLAGS) $(DEFINES) -i src/resource/resource.rc -o src/resource/resource.res
+
+src/resource/resource.o: src/resource/resource.res
+	MakeResources(src/resource/resource.res,src/resource/resource.o,src/resource/resource)
+#else
+#endif
+
+clean::
+	$(RM) $(OBJS) $(APPNAME).exe src/resource/resource.res
+
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+$(APPNAME): src/resource/resource.res
+#else
+#endif
+
+
+ComplexProgramTargetNoMan($(APPNAME))
+DependTarget()

@@ -1,0 +1,20 @@
+
+IDM_MENU MENU {
+
+    POPUP "&File" {
+
+        MENUITEM "E&xit", IDM_EXIT
+
+    }
+
+    POPUP "&Languages" {
+
+        MENUITEM "&English",  IDM_LANG_EN
+        MENUITEM "&French",   IDM_LANG_FR
+        MENUITEM "&Spanish",  IDM_LANG_ES
+
+    }
+
+    MENUITEM "&Help!",  IDM_HELP
+
+}
