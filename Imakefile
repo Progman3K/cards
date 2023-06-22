@@ -1,12 +1,31 @@
 .SUFFIXES: .rc
 
 
-.rc.o:
-	$(WRC) $(WRCFLAGS) $(DEFINES) -o $@ $<
+             APPNAME  = cards
 
-#ifndef MakeResources
-#define MakeResources(infile,target,segname)  $(WRC) $(WRCFLAGS) $(DEFINES) -i infile -o target
-#endif
+                SRCS  = src/cards.cpp src/deck.cpp src/hands.cpp
+
+
+#ifdef BUILD_YOU_WIN
+
+                 /* Using the MinGW resource-compiler because the LLVM resource-compiler (llvm-rc) is buggy */
+                  WRC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-windres
+            WRCFLAGS += $(ALLDEFINES) $(INCLUDES) $(TOP_INCLUDES)
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+            SUBDIRS += /opt/youwin/src
+
+#if defined( BUILD_ANDROID ) || ( defined( YOU_WIN_GRAPHICAL ) && defined( __APPLE_CC__ ) )
+#define DoNormalLib YES
+#undef BaseShLibReqs
+#define BaseShLibReqs
+#define LibName madchat
+#define SoRev VERSION
+             VERSION = 1
+#endif /* Build as a shared lib */
+
+#else /* ! BUILD_YOU_WIN */
 
 #if defined( BUILD_WIN32 )
                    CC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-g++
@@ -16,15 +35,29 @@
 #if defined( BUILD_WIN64 )
                    CC = /usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-g++
                   WRC = /usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-windres
-#else
+#endif
+
+#endif /* ! BUILD_YOU_WIN */
+
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+
+.rc.o:
+	$(WRC) $(WRCFLAGS) $(DEFINES) -o $@ $<
+
+src/resource/resource.o: src/resource/resource.res
+	MakeResources(src/resource/resource.res,src/resource/resource.o,src/resource/resource)
+
 
 #endif
 
-             APPNAME  = cards
+#ifndef MakeResources
+#define MakeResources(infile,target,segname)  $(WRC) $(WRCFLAGS) $(DEFINES) -i infile -o target
+#endif
 
-                SRCS  = src/cards.cpp src/deck.cpp src/hands.cpp
 
-#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
                 SRCS  += src/about.cpp \
                          src/mainwnd.cpp \
                          src/mainwnd_cmd.cpp \
@@ -39,9 +72,15 @@
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
                 OBJS += src/resource/resource.o
-#else
 #endif
 
+#if defined( BUILD_YOU_WIN )
+              SRCS += src/resource.s
+              OBJS += src/resource.o
+
+/* src/resource/resource.o: src/resource.s */
+
+#endif
                   CXX = $(CC)
 
               INCROOT = .
@@ -51,7 +90,9 @@
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
       LOCAL_LIBRARIES += -mwindows
       LOCAL_LIBRARIES += -lgdi32 -lcomctl32
-#else
+#endif
+#if defined( BUILD_YOU_WIN )
+      LOCAL_LIBRARIES += -L/opt/youwin/src -lyouwin
 #endif
             USRLIBDIR = . /* -static */
 
@@ -65,32 +106,47 @@
 
               DEFINES = -D_DEFAULT_SOURCE -DUNICODE -D_UNICODE
 
-             INCLUDES =
-
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+             INCLUDES =
+#endif
+
+#if defined( BUILD_YOU_WIN )
+             INCLUDES += -I/opt/youwin/include
+#endif
+
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
               DEFINES += -D_WIN32_WINNT=0x0500 -D_WIN32
 #endif
 
-#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
 src/resource/resource.rc: src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc
 
-src/resource/resource.res: src/resource/resource.rc src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc
+
+src/resource.s: src/resource/resource.res
+
+
+src/resource/resource.res: src/resource/resource.rc /* src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc */
 	$(WRC) $(WRCFLAGS) $(DEFINES) -i src/resource/resource.rc -o src/resource/resource.res
 
-src/resource/resource.o: src/resource/resource.res
-	MakeResources(src/resource/resource.res,src/resource/resource.o,src/resource/resource)
-#else
-#endif
+#endif /* BUILD_WIN32 || BUILD_WIN64 || BUILD_YOU_WIN */
 
 clean::
 	$(RM) $(OBJS) $(APPNAME).exe src/resource/resource.res
 
 
-#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
 $(APPNAME): src/resource/resource.res
 #else
 #endif
-
-
+/* This makes "all" in the subdirs.	*/
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+#if defined( BUILD_ANDROID ) && defined( YOU_WIN_GRAPHICAL )
+            REQUIREDLIBS += -L/opt/youwin/src -lyouwin
+#include <Library.tmpl>
+#else
 ComplexProgramTargetNoMan($(APPNAME))
+#endif
+
+
 DependTarget()

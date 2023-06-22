@@ -17,7 +17,7 @@ void MainWnd::setcard( HWND hWnd, int iCtlID, int CardID ) {
 
     if ( hCtlWnd ) {
 
-        SetWindowLongPtr( hCtlWnd, GWLP_USERDATA, CardID );
+        SetWindowLongPtr( hCtlWnd, GWLP_USERDATA, (LONG_PTR)reinterpret_cast<LONG>( MAKELONG( CardID, 0 ) ) );
         InvalidateRect( hCtlWnd, 0, true );
 
     }
@@ -39,7 +39,7 @@ BOOL MainWnd::OnInit( HWND hWnd, HWND /* hFocusWnd */, LPARAM lParam ) {
 
 void MainWnd::OnDrawItem( HWND hWnd, const DRAWITEMSTRUCT * lpcDI ) {
 
-    int CardID = GetWindowLongPtr( lpcDI->hwndItem, GWLP_USERDATA );
+    int CardID = LOWORD( GetWindowLongPtr( lpcDI->hwndItem, GWLP_USERDATA ) );
 
     HBITMAP hBmp = LoadBitmap( hInst, MAKEINTRESOURCE( CardID ) );
 

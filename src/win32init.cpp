@@ -31,9 +31,12 @@ static BOOL bRegisterClasses( HINSTANCE hInst, HICON hClassIcon ) {
     wc.hCursor       = LoadCursor( NULL, IDC_ARROW );
 #endif /* _WIN32_WCE */
 
+//    TCHAR szClassName[] = TEXT( IDSZ_MAIN_WINDOW_CLASS );
+
     wc.hbrBackground = NULL;
     wc.lpszMenuName  = NULL;
-    wc.lpszClassName = TEXT( IDSZ_MAIN_WINDOW_CLASS );
+//    wc.lpszClassName = IDSZ_MAIN_WINDOW_CLASS;
+    wc.lpszClassName = _T( IDSZ_MAIN_WINDOW_CLASS );
 
     if ( 0 == RegisterClass( &wc ) ) {
 

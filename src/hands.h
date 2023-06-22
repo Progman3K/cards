@@ -2,6 +2,15 @@
 #define HANDS_DEFINES_H
 
 
+#ifdef _WIN32
+#include <windows.h>
+#define TEXTCHAR TCHAR
+#else
+#define TEXT( string ) string
+#define TEXTCHAR char
+#endif
+
+
 class Hands {
 
     static bool IsRoyalFlush( const class Deck & hand );
@@ -34,23 +43,23 @@ class Hands {
         } Hand;
 
 
-        static const char * name( Hand hand ) {
+        static const TEXTCHAR * name( Hand hand ) {
 
             switch( hand ) {
 
-                case hand_High_Card:       return "High Card";
-                case hand_One_Pair:        return "One Pair";
-                case hand_Two_Pair:        return "Two Pair";
-                case hand_Three_of_a_Kind: return "Three of a Kind";
-                case hand_Straight:        return "Straight";
-                case hand_Flush:           return "Flush";
-                case hand_Full_House:      return "Full House";
-                case hand_Four_of_a_Kind:  return "Four of a Kind";
-                case hand_Straight_Flush:  return "Straight Flush";
-                case hand_Royal_Flush:     return "Royal Flush";
+                case hand_High_Card:       return TEXT( "High Card" );
+                case hand_One_Pair:        return TEXT( "One Pair" );
+                case hand_Two_Pair:        return TEXT( "Two Pair" );
+                case hand_Three_of_a_Kind: return TEXT( "Three of a Kind" );
+                case hand_Straight:        return TEXT( "Straight" );
+                case hand_Flush:           return TEXT( "Flush" );
+                case hand_Full_House:      return TEXT( "Full House" );
+                case hand_Four_of_a_Kind:  return TEXT( "Four of a Kind" );
+                case hand_Straight_Flush:  return TEXT( "Straight Flush" );
+                case hand_Royal_Flush:     return TEXT( "Royal Flush" );
 
                 default:
-                    return "UNKNOWN";
+                    return TEXT( "UNKNOWN" );
 
             }
 

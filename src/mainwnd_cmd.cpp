@@ -5,7 +5,7 @@
 
 void MainWnd::togglecardchoice( HWND hCtlWnd, int cardno ) {
 
-    unsigned short cardID = GetWindowLongPtr( hCtlWnd, GWLP_USERDATA );
+    unsigned short cardID = LOWORD( GetWindowLongPtr( hCtlWnd, GWLP_USERDATA ) );
     TRACE( ID_DBG_MINUTIAE, EOL "Card " << cardno << " (" << cardID << ") requesting discard" EOL );
 
     // Check if the card # is already in the array.

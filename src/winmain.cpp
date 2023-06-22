@@ -128,12 +128,12 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
             TRACE( ID_DBG_USER_MESSAGES, EOL "Computer's hand: " << Hands::name( computerResult ) << EOL );
             print_deck( pDlg, IDST_COMPUTERCARD1, computerhand );
 
-            SetDlgItemTextA( hMainWnd, IDST_COMPUTER_STATUS, Hands::name( computerResult ) );
+            SetDlgItemText( hMainWnd, IDST_COMPUTER_STATUS, Hands::name( computerResult ) );
 
             TRACE( ID_DBG_USER_MESSAGES, EOL "Your hand: " << Hands::name( playerResult ) << EOL );
             print_deck( pDlg, IDST_PLAYERCARD1, playerhand );
 
-            SetDlgItemTextA( hMainWnd, IDST_PLAYER_STATUS, Hands::name( playerResult ) );
+            SetDlgItemText( hMainWnd, IDST_PLAYER_STATUS, Hands::name( playerResult ) );
             break;
 
         case Hands::notification_discard: {
@@ -170,28 +170,28 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
                 TRACE( ID_DBG_USER_MESSAGES, EOL "Your hand: " << Hands::name( playerResult ) << EOL );
                 print_deck( pDlg, IDST_PLAYERCARD1, playerhand );
 
-                std::string computer_addendum;
-                std::string player_addendum;
+                TSTRING computer_addendum;
+                TSTRING player_addendum;
 
                 switch( he ) {
 
                     case Hands::Hand_Equality_TrulyEqual:
 
                         TRACE( ID_DBG_USER_MESSAGES, EOL "Tie!" EOL );
-                        computer_addendum = " - Tie!";
-                        player_addendum = " - Tie!";
+                        computer_addendum.assign( TEXT( " - Tie!" ) );
+                        player_addendum.assign( TEXT( " - Tie!" ) );
                         break;
 
                     case Hands::Hand_Equality_First_Hand_Is_Highest:
 
                         TRACE( ID_DBG_USER_MESSAGES, EOL "You win!" EOL );
-                        player_addendum = " - You win!";
+                        player_addendum.assign( TEXT( " - You win!" ) );
                         break;
 
                     case Hands::Hand_Equality_Second_Hand_Is_Highest:
 
                         TRACE( ID_DBG_USER_MESSAGES, EOL "Computer wins!" EOL );
-                        computer_addendum = " - Computer wins!";
+                        computer_addendum.assign( TEXT( " - Computer wins!" ) );
                         break;
 
                     case Hands::Hand_Equality_Unknown:
@@ -199,8 +199,8 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 
                 }
 
-                SetDlgItemTextA( hMainWnd, IDST_COMPUTER_STATUS, ( Hands::name( computerResult ) + computer_addendum ).c_str() );
-                SetDlgItemTextA( hMainWnd, IDST_PLAYER_STATUS, ( Hands::name( playerResult ) + player_addendum ).c_str() );
+                SetDlgItemText( hMainWnd, IDST_COMPUTER_STATUS, ( Hands::name( computerResult ) + computer_addendum ).c_str() );
+                SetDlgItemText( hMainWnd, IDST_PLAYER_STATUS, ( Hands::name( playerResult ) + player_addendum ).c_str() );
 
                 if ( ! WaitForInput( &bContinue ) ) {
 
@@ -218,6 +218,8 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 }
 
 
+#if defined( __MINGW32__ )
+
 int main( int iArgC, char ** apsArgs ) {
 
     if ( iArgC > 1 ) {
@@ -232,15 +234,34 @@ int main( int iArgC, char ** apsArgs ) {
 
     }
 
+    HINSTANCE hInst = GetModuleHandle( 0 );
+
+#else /* ! __MINGW32__ */
+int 
+WINAPI
+#if defined( _MSC_VER )
+__stdcall 
+#endif /* _MSC_VER */
+#if defined( __unix__ )
+_tWinMain( HINSTANCE hInst, HINSTANCE hPrevInst, LPTSTR /* pszCmdLine */, int /* nCmdShow */ ) {
+#else /* ! __unix__ */
+#if defined( UNICODE ) || defined( _UNICODE )
+wWinMain( HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR /* pszCmdLine */, int /* nCmdShow */ ) {
+#else /* ! UNICODE */
+CALLBACK WinMain( HINSTANCE hInst, HINSTANCE hPrevInst, LPTSTR /* pszCmdLine */, int /* nCmdShow */ ) {
+#endif /* ! UNICODE */
+#endif /* ! __unix__ */
+#endif /* ! __MINGW32__ */
+
     TRACE( ID_DBG_CHECKPOINT, "Entering process" EOL );
 
     OutputDebugString( TEXT( "There is only Zuul" ) );
 
-    HINSTANCE hInst = GetModuleHandle( 0 );
-
     Init( hInst );
 
-    if ( 0 == ( hMainWnd = CreateDialogParam( hInst, MAKEINTRESOURCE( /* ! */ ( GetSystemMetrics( SM_CYSCREEN ) > GetSystemMetrics( SM_CXSCREEN ) ) ? IDD_MAIN_PORTRAIT : IDD_MAIN_LANDSCAPE ), HWND_DESKTOP, reinterpret_cast<DLGPROC>( MainWnd::bDlgProc ), reinterpret_cast<LPARAM>( hInst ) ) ) ) {
+    int DlgID = ( GetSystemMetrics( SM_CYSCREEN ) > GetSystemMetrics( SM_CXSCREEN ) ) ? IDD_MAIN_PORTRAIT : IDD_MAIN_LANDSCAPE;
+
+    if ( 0 == ( hMainWnd = CreateDialogParam( hInst, MAKEINTRESOURCE( DlgID ), HWND_DESKTOP, reinterpret_cast<DLGPROC>( MainWnd::bDlgProc ), reinterpret_cast<LPARAM>( hInst ) ) ) ) {
 
         MessageBox( HWND_DESKTOP, TEXT( "Couldn't create main dialog" ), 0, MB_OK );
         return -1;
