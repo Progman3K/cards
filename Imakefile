@@ -4,6 +4,7 @@
              APPNAME  = cards
 
                 SRCS  = src/cards.cpp src/deck.cpp src/hands.cpp
+                OBJS  += src/cards.o src/deck.o src/hands.o
 
 
 #ifdef BUILD_YOU_WIN
@@ -49,11 +50,12 @@ src/resource/resource.o: src/resource/resource.res
 	MakeResources(src/resource/resource.res,src/resource/resource.o,src/resource/resource)
 
 
-#endif
-
 #ifndef MakeResources
 #define MakeResources(infile,target,segname)  $(WRC) $(WRCFLAGS) $(DEFINES) -i infile -o target
 #endif
+
+#endif
+
 
 
 
@@ -68,7 +70,14 @@ src/resource/resource.o: src/resource/resource.res
                 SRCS  += src/main.cpp
 #endif
 
-                OBJS  = $(subst .cpp,.o,$(SRCS))
+/*                OBJS  = $(subst .cpp,.o,$(SRCS)) */
+                OBJS  += src/about.o \
+                         src/mainwnd.o \
+                         src/mainwnd_cmd.o \
+                         src/displaychange.o \
+                         src/win32init.o \
+                         src/winmain.o
+
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
                 OBJS += src/resource/resource.o
@@ -92,7 +101,7 @@ src/resource/resource.o: src/resource/resource.res
       LOCAL_LIBRARIES += -lgdi32 -lcomctl32
 #endif
 #if defined( BUILD_YOU_WIN )
-      LOCAL_LIBRARIES += -L/opt/youwin/src -lyouwin
+      LOCAL_LIBRARIES += -L/opt/youwin/src -lyouwin -z noexecstack
 #endif
             USRLIBDIR = . /* -static */
 

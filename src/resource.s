@@ -1,8 +1,8 @@
-.global _binary_resource_res
-.global _binary_resource_res_size
-
 # The following directive works for most assemblers
 .section .rodata
+
+.global _binary_resource_res
+.global _binary_resource_res_size
 
 # On OSX, if the directive above fails, comment it.
 # and uncomment the following line
