@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <functional>
 
 
 class Deck : public std::vector<std::reference_wrapper<const Card>> {

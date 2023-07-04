@@ -52,13 +52,6 @@ static BOOL bRegisterClasses( HINSTANCE hInst, HICON hClassIcon ) {
 
 HICON Win32AppInit( HINSTANCE hInst ) {
 
-    INITCOMMONCONTROLSEX InitCtrlEx;
-
-    InitCtrlEx.dwSize = sizeof( INITCOMMONCONTROLSEX );
-    InitCtrlEx.dwICC  = ICC_PROGRESS_CLASS;
-
-    InitCommonControlsEx( &InitCtrlEx );
-
     HICON   hMainIcon;
 
     if ( NULL == ( hMainIcon = LoadIcon( hInst, MAKEINTRESOURCE( IDI_MAIN ) ) ) ) {

@@ -101,7 +101,7 @@ src/resource/resource.o: src/resource/resource.res
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
       LOCAL_LIBRARIES += -mwindows
-      LOCAL_LIBRARIES += -lgdi32 -lcomctl32
+      LOCAL_LIBRARIES += -lgdi32
 #endif
 #if defined( BUILD_YOU_WIN )
       LOCAL_LIBRARIES += YWLibs -L/opt/youwin/src -lyouwin -z noexecstack
