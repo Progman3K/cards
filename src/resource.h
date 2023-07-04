@@ -13,8 +13,8 @@
 //#define IDSZ_CARD_WINDOW_CLASS                    "Sprysoftware|Poker|CardWnd"
 #define IDSZ_CARD_WINDOW_CLASS                    WC_BUTTON
 
-#define PLAYERCARD_CTL_STYLE                      ( BS_OWNERDRAW | /* BS_BITMAP | */ BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE )
-#define COMPUTERCARD_CTL_STYLE                    ( BS_OWNERDRAW | /* BS_BITMAP | */ WS_CHILD | WS_VISIBLE | WS_DISABLED )
+#define PLAYERCARD_CTL_STYLE                      ( BS_OWNERDRAW | WS_CHILD | WS_VISIBLE | WS_TABSTOP )
+#define COMPUTERCARD_CTL_STYLE                    ( BS_OWNERDRAW | WS_CHILD | WS_VISIBLE | WS_DISABLED )
 
 #define IDSZ_INIFILE_NAME                         "poker.ini"
 

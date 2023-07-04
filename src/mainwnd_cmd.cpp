@@ -51,6 +51,7 @@ void MainWnd::OnCommand( HWND hWnd, int iID, HWND hCtlWnd, UINT uiNotifyCode ) {
         case IDCANCEL:
         case IDM_EXIT:
 
+            TRACE( ID_DBG_MINUTIAE, "Command code " << iID << " received, exiting dialog" << EOL );
             FORWARD_WM_CLOSE( hWnd, PostMessage );
             break;
 

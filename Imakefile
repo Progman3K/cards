@@ -28,6 +28,8 @@
 
 #else /* ! BUILD_YOU_WIN */
 
+          DEPENDFLAGS = -I/usr/lib/mingw64-toolchain/x86_64-w64-mingw32/include
+
 #if defined( BUILD_WIN32 )
                    CC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-g++
                   WRC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-windres
@@ -46,13 +48,14 @@
 .rc.o:
 	$(WRC) $(WRCFLAGS) $(DEFINES) -o $@ $<
 
-src/resource/resource.o: src/resource/resource.res
-	MakeResources(src/resource/resource.res,src/resource/resource.o,src/resource/resource)
-
-
 #ifndef MakeResources
 #define MakeResources(infile,target,segname)  $(WRC) $(WRCFLAGS) $(DEFINES) -i infile -o target
 #endif
+
+
+src/resource/resource.o: src/resource/resource.res
+	MakeResources(src/resource/resource.res,src/resource/resource.o,src/resource/resource)
+
 
 #endif
 
@@ -101,7 +104,7 @@ src/resource/resource.o: src/resource/resource.res
       LOCAL_LIBRARIES += -lgdi32 -lcomctl32
 #endif
 #if defined( BUILD_YOU_WIN )
-      LOCAL_LIBRARIES += -L/opt/youwin/src -lyouwin -z noexecstack
+      LOCAL_LIBRARIES += YWLibs -L/opt/youwin/src -lyouwin -z noexecstack
 #endif
             USRLIBDIR = . /* -static */
 
@@ -113,7 +116,7 @@ src/resource/resource.o: src/resource/resource.res
         CXXDEBUGFLAGS = -O0 -g
 #endif
 
-              DEFINES = -D_DEFAULT_SOURCE -DUNICODE -D_UNICODE
+              DEFINES = -D_DEFAULT_SOURCE /* -DUNICODE -D_UNICODE */
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
              INCLUDES =

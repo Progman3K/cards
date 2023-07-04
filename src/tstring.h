@@ -5,7 +5,13 @@
 
 
 #include <string>
-#include <tchar.h>
+
+//#include <tchar.h>
+#if defined( UNICODE ) || defined( _UNICODE )
+typedef wchar_t TCHAR;
+#else
+typedef char TCHAR;
+#endif
 
 
 class TSTRING : public std::basic_string<TCHAR> {
@@ -77,11 +83,11 @@ class TSTRING : public std::basic_string<TCHAR> {
 #endif
 
 
+#if 0
         unsigned LoadString( HINSTANCE hInst, UINT uiStringID ) {
 
             clear();
 
-#if 0
      /*
         This is disabled because the method of locating a string,
         obtaining its length, pre-allocating its length and then
@@ -136,7 +142,7 @@ class TSTRING : public std::basic_string<TCHAR> {
             resize( ( dwSize / sizeof( TCHAR ) ) + sizeof( TCHAR ) );
 
             return ::LoadString( hInst, uiStringID, (TCHAR *)c_str(), ( dwSize / sizeof( TCHAR ) ) );
-#else
+//#else
 
     TCHAR szString[4096];
     ZeroMemory( szString, sizeof( szString ) );
@@ -147,9 +153,9 @@ class TSTRING : public std::basic_string<TCHAR> {
 
     return (unsigned)size();
 
-#endif
 
         }
+#endif
 
 };
 

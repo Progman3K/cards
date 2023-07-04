@@ -41,7 +41,20 @@ void MainWnd::OnDrawItem( HWND hWnd, const DRAWITEMSTRUCT * lpcDI ) {
 
     int CardID = LOWORD( GetWindowLongPtr( lpcDI->hwndItem, GWLP_USERDATA ) );
 
+    if ( 0 == CardID ) {
+
+        TRACE( ID_DBG_ERROR, "ERROR: NO CARD SET IN CONTROL" EOL );
+        return;
+
+    }
+
     HBITMAP hBmp = LoadBitmap( hInst, MAKEINTRESOURCE( CardID ) );
+
+    if ( 0 == hBmp ) {
+
+        return;
+
+    }
 
     RECT r;
     GetClientRect( lpcDI->hwndItem, &r );
@@ -51,9 +64,11 @@ void MainWnd::OnDrawItem( HWND hWnd, const DRAWITEMSTRUCT * lpcDI ) {
 
     auto hdcMem = CreateCompatibleDC( lpcDI->hDC );
 
+    TRACE( ID_DBG_MINUTIAE, "DrawItemStruct - CtlType: " << lpcDI->CtlType << " CtlID: " << lpcDI->CtlID << " itemID: " << lpcDI->itemID << " itemAction: " << lpcDI->itemAction << " itemState: " << lpcDI->itemState << " hwndItem: " << lpcDI->hwndItem << " hDC: " << lpcDI->hDC << " rcItem: " << lpcDI->rcItem.left << "," << lpcDI->rcItem.top << "," << lpcDI->rcItem.right << "," << lpcDI->rcItem.bottom << " itemData: " << lpcDI->itemData << EOL );
+
     if ( hdcMem ) {
 
-        SelectBitmap( hdcMem, hBmp );
+        auto hOldBmp = SelectBitmap( hdcMem, hBmp );
 
         StretchBlt( lpcDI->hDC, 0, 0, r.right, r.bottom, hdcMem, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY );
 
@@ -76,7 +91,22 @@ void MainWnd::OnDrawItem( HWND hWnd, const DRAWITEMSTRUCT * lpcDI ) {
 
         }
 
+//        SelectBitmap( hdcMem, hOldBmp );
+
         DeleteDC( hdcMem );
+
+    }
+
+    DeleteObject( hBmp );
+
+    if ( ODA_FOCUS & lpcDI->itemAction ) {
+
+        r.left   += GetSystemMetrics( SM_CXEDGE );
+        r.top    += GetSystemMetrics( SM_CXEDGE );
+        r.right  -= GetSystemMetrics( SM_CXEDGE );
+        r.bottom -= GetSystemMetrics( SM_CXEDGE );
+
+        DrawFocusRect( lpcDI->hDC, &r );
 
     }
 

@@ -257,7 +257,9 @@ CALLBACK WinMain( HINSTANCE hInst, HINSTANCE hPrevInst, LPTSTR /* pszCmdLine */,
 
     OutputDebugString( TEXT( "There is only Zuul" ) );
 
-    Init( hInst );
+    OutputDebugString( TEXT( "Call application init" ) );
+    Win32AppInit( hInst );
+    OutputDebugString( TEXT( "Application init returned" ) );
 
     int DlgID = ( GetSystemMetrics( SM_CYSCREEN ) > GetSystemMetrics( SM_CXSCREEN ) ) ? IDD_MAIN_PORTRAIT : IDD_MAIN_LANDSCAPE;
 

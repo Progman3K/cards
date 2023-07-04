@@ -33,7 +33,7 @@ static BOOL bRegisterClasses( HINSTANCE hInst, HICON hClassIcon ) {
 
 //    TCHAR szClassName[] = TEXT( IDSZ_MAIN_WINDOW_CLASS );
 
-    wc.hbrBackground = NULL;
+    wc.hbrBackground = (HBRUSH)(COLOR_3DFACE + 1);
     wc.lpszMenuName  = NULL;
 //    wc.lpszClassName = IDSZ_MAIN_WINDOW_CLASS;
     wc.lpszClassName = _T( IDSZ_MAIN_WINDOW_CLASS );
@@ -50,7 +50,7 @@ static BOOL bRegisterClasses( HINSTANCE hInst, HICON hClassIcon ) {
 }
 
 
-HICON Init( HINSTANCE hInst ) {
+HICON Win32AppInit( HINSTANCE hInst ) {
 
     INITCOMMONCONTROLSEX InitCtrlEx;
 
@@ -77,6 +77,7 @@ HICON Init( HINSTANCE hInst ) {
 
     }
 
+    TRACE( ID_DBG_CHECKPOINT, "Application static initialization succeeded" EOL );
     return hMainIcon;
 
 }

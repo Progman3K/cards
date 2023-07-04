@@ -17,7 +17,7 @@
 #include "mainwnd.h"
 #include "about.h"
 
-HICON Init( HINSTANCE hInst );
+HICON Win32AppInit( HINSTANCE hInst );
 
 extern BOOL bContinue;
 
