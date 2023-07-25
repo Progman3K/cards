@@ -12,6 +12,8 @@ HWND hMainWnd = NULL;
 
 BOOL bContinue;
 
+int iCardBack = IDBMP_BACK_TEST /* IDBMP_BACK_BLUE */ /* IDBMP_BACK_CARS */;
+
 
 bool WaitForInput( BOOL * pContinue ) {
 
@@ -22,7 +24,9 @@ bool WaitForInput( BOOL * pContinue ) {
 
     for ( ; ! *pContinue ; ) {
 
-        if ( ! GetMessage( &Msg, 0, 0, 0 ) ) {
+        BOOL bRet = GetMessage( &Msg, 0, 0, 0 );
+
+        if ( ( 0 == bRet ) || ( -1 == bRet ) ) {
 
             TRACE( ID_DBG_MINUTIAE, "ABENDING PROGRAM" EOL );
             return false;
@@ -100,7 +104,7 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 
                 for ( auto ctl : allcardctls ) {
 
-                    pDlg->setcard( pDlg->m_hDlg, ctl, IDBMP_BACK_BLUE );
+                    pDlg->setcard( pDlg->m_hDlg, ctl, iCardBack );
 
                 }
 

@@ -36,20 +36,20 @@ Examples:
 
 To build, go to the toplevel folder and choose which version, ex:
 
+Build the 32-bit Windows version:
 ```
 imake -DBUILD_WIN32 -DUseInstalled -I/usr/lib64/X11/config
 make
 ```
-Will build the 32-bit Windows version
 
+Build the 64-bit Windows version:
 ```
 imake -DBUILD_WIN64 -DUseInstalled -I/usr/lib64/X11/config
 make
 ```
-Will build the 64-bit Windows version
 
+Build the console-mode version for all platforms:
 ```
 xmkmf
 make
 ```
-Will build the console-mode version for all platforms

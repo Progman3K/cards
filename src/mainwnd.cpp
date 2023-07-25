@@ -5,8 +5,8 @@
 
 void MainWnd::OnClose( HWND hWnd ) {
 
-    DestroyWindow( hWnd );
     PostQuitMessage( 0 );
+    DestroyWindow( hWnd );
 
 }
 
@@ -91,7 +91,7 @@ void MainWnd::OnDrawItem( HWND hWnd, const DRAWITEMSTRUCT * lpcDI ) {
 
         }
 
-//        SelectBitmap( hdcMem, hOldBmp );
+        SelectBitmap( hdcMem, hOldBmp );
 
         DeleteDC( hdcMem );
 

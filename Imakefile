@@ -131,13 +131,13 @@ src/resource/resource.o: src/resource/resource.res
 #endif
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
-src/resource/resource.rc: src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc
+
 
 
 src/resource.s: src/resource/resource.res
 
 
-src/resource/resource.res: src/resource/resource.rc /* src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc */
+src/resource/resource.res: src/resource/resource.rc src/resource/dialogs.rc src/resource/menus.rc src/resource/cards.rc src/resource/strings.rc src/resource/version.rc src/resource.h
 	$(WRC) $(WRCFLAGS) $(DEFINES) -i src/resource/resource.rc -o src/resource/resource.res
 
 #endif /* BUILD_WIN32 || BUILD_WIN64 || BUILD_YOU_WIN */
@@ -146,9 +146,11 @@ clean::
 	$(RM) $(OBJS) $(APPNAME).exe src/resource/resource.res
 
 
-#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
+#if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
 $(APPNAME): src/resource/resource.res
-#else
+#endif
+#if defined( BUILD_YOU_WIN )
+$(APPNAME): src/resource/resource.res /opt/youwin/src/libyouwin.a
 #endif
 /* This makes "all" in the subdirs.	*/
 MakeSubdirs($(SUBDIRS))

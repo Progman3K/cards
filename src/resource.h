@@ -44,6 +44,8 @@
 #define IDBMP_BACK_RED                         110
 #define IDBMP_BACK_RED2                        111
 
+#define IDBMP_BACK_TEST                        112
+
 #define ID_SPADES_ACE                          1
 #define ID_SPADES_DEUCE                        2
 #define ID_SPADES_TREY                         3
