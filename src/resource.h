@@ -13,6 +13,8 @@
 //#define IDSZ_CARD_WINDOW_CLASS                    "Sprysoftware|Poker|CardWnd"
 #define IDSZ_CARD_WINDOW_CLASS                    WC_BUTTON
 
+//#define PLAYERCARD_CTL_STYLE                      ( BS_BITMAP | WS_CHILD | WS_VISIBLE | WS_TABSTOP )
+//#define COMPUTERCARD_CTL_STYLE                    ( BS_BITMAP | WS_CHILD | WS_VISIBLE | WS_DISABLED )
 #define PLAYERCARD_CTL_STYLE                      ( BS_OWNERDRAW | WS_CHILD | WS_VISIBLE | WS_TABSTOP )
 #define COMPUTERCARD_CTL_STYLE                    ( BS_OWNERDRAW | WS_CHILD | WS_VISIBLE | WS_DISABLED )
 
@@ -44,7 +46,6 @@
 #define IDBMP_BACK_RED                         110
 #define IDBMP_BACK_RED2                        111
 
-#define IDBMP_BACK_TEST                        112
 
 #define ID_SPADES_ACE                          1
 #define ID_SPADES_DEUCE                        2

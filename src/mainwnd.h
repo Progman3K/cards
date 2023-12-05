@@ -40,6 +40,7 @@ class MainWnd : public DlgWnd<MainWnd> {
         /* Message-crackers AKA message-handlers */
         void OnClose( HWND );
         void OnCommand( HWND, int, HWND, UINT );
+        HBRUSH OnCtlColorButton( HWND hWnd, HDC hDC, HWND hChildWnd, int type );
         void OnDisplayChange( HWND, UINT, UINT, UINT );
         void OnDrawItem( HWND, const DRAWITEMSTRUCT * );
         BOOL OnInit( HWND, HWND, LPARAM );
@@ -59,6 +60,8 @@ class MainWnd : public DlgWnd<MainWnd> {
         void Quit( HWND hWnd, int iReturnValue );
 
         void togglecardchoice( HWND hCtlWnd, int cardno );
+
+        void DrawButton( HWND hWnd, HDC hDC );
 
     public:
 

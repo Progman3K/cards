@@ -29,7 +29,7 @@ void MainWnd::togglecardchoice( HWND hCtlWnd, int cardno ) {
     // sort the array
     std::sort( discard_cards.begin(), discard_cards.end() );
 
-    InvalidateRect( hCtlWnd, 0, true );
+    InvalidateRect( hCtlWnd, 0, false );
 
 }
 

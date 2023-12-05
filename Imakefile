@@ -10,12 +10,12 @@
 #ifdef BUILD_YOU_WIN
 
                  /* Using the MinGW resource-compiler because the LLVM resource-compiler (llvm-rc) is buggy */
-                  WRC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-windres
+                  WRC = i686-w64-mingw32-windres
             WRCFLAGS += $(ALLDEFINES) $(INCLUDES) $(TOP_INCLUDES)
 
 #define IHaveSubdirs
 #define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
-            SUBDIRS += /opt/youwin/src
+            SUBDIRS += YWSrc
 
 #if defined( BUILD_ANDROID ) || ( defined( YOU_WIN_GRAPHICAL ) && defined( __APPLE_CC__ ) )
 #define DoNormalLib YES
@@ -31,13 +31,13 @@
           DEPENDFLAGS = -I/usr/lib/mingw64-toolchain/x86_64-w64-mingw32/include
 
 #if defined( BUILD_WIN32 )
-                   CC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-g++
-                  WRC = /usr/lib/mingw64-toolchain/bin/i686-w64-mingw32-windres
+                   CC = i686-w64-mingw32-g++
+                  WRC = i686-w64-mingw32-windres
 #endif
 
 #if defined( BUILD_WIN64 )
-                   CC = /usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-g++
-                  WRC = /usr/lib/mingw64-toolchain/bin/x86_64-w64-mingw32-windres
+                   CC = x86_64-w64-mingw32-g++
+                  WRC = x86_64-w64-mingw32-windres
 #endif
 
 #endif /* ! BUILD_YOU_WIN */
@@ -69,17 +69,19 @@ src/resource/resource.o: src/resource/resource.res
                          src/displaychange.cpp \
                          src/win32init.cpp \
                          src/winmain.cpp
-#else
-                SRCS  += src/main.cpp
-#endif
 
-/*                OBJS  = $(subst .cpp,.o,$(SRCS)) */
                 OBJS  += src/about.o \
                          src/mainwnd.o \
                          src/mainwnd_cmd.o \
                          src/displaychange.o \
                          src/win32init.o \
                          src/winmain.o
+#else
+                SRCS  += src/main.cpp
+                OBJS  += src/main.o
+#endif
+
+/*                OBJS  = $(subst .cpp,.o,$(SRCS)) */
 
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
@@ -95,25 +97,26 @@ src/resource/resource.o: src/resource/resource.res
 #endif
                   CXX = $(CC)
 
-              INCROOT = .
 
       LOCAL_LIBRARIES = -lstdc++
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 )
+              INCROOT = .
+      LOCAL_LIBRARIES += -static
       LOCAL_LIBRARIES += -mwindows
       LOCAL_LIBRARIES += -lgdi32
 #endif
 #if defined( BUILD_YOU_WIN )
-      LOCAL_LIBRARIES += YWLibs -L/opt/youwin/src -lyouwin -z noexecstack
+      LOCAL_LIBRARIES += YWLibs -lyouwin -z noexecstack
 #endif
             USRLIBDIR = . /* -static */
 
-           CXXOPTIONS = -Wall -std=c++20
+           CXXOPTIONS += -Wall -std=c++20
 
 #if defined( BUILD_RELEASE )
-        CXXDEBUGFLAGS = -Os
+/*        CXXDEBUGFLAGS = -Os */
 #else
-        CXXDEBUGFLAGS = -O0 -g
+/*        CXXDEBUGFLAGS = -O0 -g -fno-inline -fno-omit-frame-pointer */
 #endif
 
               DEFINES = -D_DEFAULT_SOURCE /* -DUNICODE -D_UNICODE */
@@ -123,7 +126,8 @@ src/resource/resource.o: src/resource/resource.res
 #endif
 
 #if defined( BUILD_YOU_WIN )
-             INCLUDES += -I/opt/youwin/include
+/*             INCLUDES += -I/opt/youwin/include */
+/*             INCLUDES = YW_INCLUDEPATH */
 #endif
 
 #if defined( BUILD_WIN32 ) || defined( BUILD_WIN64 ) || defined( BUILD_YOU_WIN )
@@ -150,13 +154,13 @@ clean::
 $(APPNAME): src/resource/resource.res
 #endif
 #if defined( BUILD_YOU_WIN )
-$(APPNAME): src/resource/resource.res /opt/youwin/src/libyouwin.a
+$(APPNAME): src/resource/resource.res
 #endif
 /* This makes "all" in the subdirs.	*/
 MakeSubdirs($(SUBDIRS))
 DependSubdirs($(SUBDIRS))
 #if defined( BUILD_ANDROID ) && defined( YOU_WIN_GRAPHICAL )
-            REQUIREDLIBS += -L/opt/youwin/src -lyouwin
+            REQUIREDLIBS += -lyouwin
 #include <Library.tmpl>
 #else
 ComplexProgramTargetNoMan($(APPNAME))

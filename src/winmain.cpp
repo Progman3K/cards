@@ -12,7 +12,7 @@ HWND hMainWnd = NULL;
 
 BOOL bContinue;
 
-int iCardBack = IDBMP_BACK_TEST /* IDBMP_BACK_BLUE */ /* IDBMP_BACK_CARS */;
+int iCardBack = IDBMP_BACK_BLUE /* IDBMP_BACK_CARS */;
 
 
 bool WaitForInput( BOOL * pContinue ) {
@@ -74,6 +74,9 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 
     auto enable_controls = []( MainWnd * pDlg, const std::vector<int> & ctls, bool bEnable ) {
 
+//        InvalidateRect( GetDlgItem( pDlg->m_hDlg, IDST_COMPUTER_IMAGE_GROUP ), NULL, false );
+//        InvalidateRect( GetDlgItem( pDlg->m_hDlg, IDST_PLAYER_IMAGE_GROUP ), NULL, false );
+
         for ( auto ctl : ctls ) {
 
             EnableWindow( GetDlgItem( pDlg->m_hDlg, ctl ), bEnable );
@@ -110,7 +113,7 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 
                 enable_controls( pDlg, allcardctls, false );
 
-                SetFocus( hMainWnd );
+                SetFocus( GetDlgItem( hMainWnd, IDB_CONTINUE ) );
 
                 if ( ! WaitForInput( &bContinue ) ) {
 
@@ -148,7 +151,8 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 
                 enable_controls( pDlg, playercardctls, true );
 
-                SetFocus( hMainWnd );
+                SetFocus( GetDlgItem( hMainWnd, IDB_CONTINUE ) );
+//                SetFocus( hMainWnd );
 
                 if ( ! WaitForInput( &bContinue ) ) {
 
@@ -158,7 +162,8 @@ LCARDRESULT pokerproc( const class Deck & playerhand, Hands::Hand playerResult, 
 
                 enable_controls( pDlg, playercardctls, false );
 
-                SetFocus( hMainWnd );
+                SetFocus( GetDlgItem( hMainWnd, IDB_CONTINUE ) );
+//                SetFocus( hMainWnd );
 
                 discard_cards_reply = pDlg->discard_cards;
                 pDlg->discard_cards.clear();
